@@ -14,7 +14,7 @@ através da rota /api/product
     2 Na raiz do projeto rodar os comandos abaixo:
     composer install (isso irá instalar o laravel e suas dependencias)
     
-    3 Copiar o arquivo .ENV e fazer suas configurações de locais de database, host etc...
+    3 Copiar o arquivo .ENV e fazer suas configurações locais de database, host etc...
     cp .env.example .env
     
     4 Rodar migrations
