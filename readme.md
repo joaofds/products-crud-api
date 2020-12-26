@@ -1,6 +1,6 @@
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
-## Basic Products API Laravel
+## API CRUD de Produtos
 
 Aplicação simples para exemplificar o uso de uma API. O unico objetivo deste material é executar tarefas CRUD de produtos
 através da rota /api/product
