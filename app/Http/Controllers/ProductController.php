@@ -19,7 +19,7 @@ class ProductController extends Controller
             return response()->json(
                 [
                     'code' => 200,
-                    'status' => 'success',
+                    'status' => 'Showing all products',
                     'produtos' => $product->all(),
                 ]
             );
@@ -52,7 +52,7 @@ class ProductController extends Controller
             return response()->json(
                 [
                     'code' => 201,
-                    'status' => 'success',
+                    'status' => 'Product created',
                 ]
             );
         } else {
@@ -88,7 +88,7 @@ class ProductController extends Controller
         } else {
             return response()->json([
                 'code' => 204,
-                'status' => 'Not Found'
+                'status' => 'Product not found'
             ]);
         }
 
@@ -116,14 +116,14 @@ class ProductController extends Controller
             return response()->json(
                 [
                     'code' => 200,
-                    'status' => 'updated'
+                    'status' => 'Product updated'
                 ]
             );
         } else {
             return response()->json(
                 [
                     'code' => 204,
-                    'status' => 'Not Found'
+                    'status' => 'Product not found'
                 ]
             );
         }
@@ -146,14 +146,14 @@ class ProductController extends Controller
             return response()->json(
                 [
                     'code' => 200,
-                    'status' => 'deleted'
+                    'status' => 'Product deleted'
                 ]
             );
         } else {
             return response()->json(
                 [
                     'code' => 204,
-                    'status' => 'Not Found'
+                    'status' => 'Product not found'
                 ]
             );
         }
