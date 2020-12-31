@@ -18,9 +18,7 @@ class ProductController extends Controller
         if (count($product->all()) > 0) {
             return response()->json(
                 [
-                    'code' => 200,
-                    'status' => 'Showing all products',
-                    'produtos' => $product->all(),
+                    'produtos' => $product->all()
                 ]
             );
         } else {
