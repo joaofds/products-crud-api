@@ -17,8 +17,8 @@ class CreateSalesTable extends Migration
             $table->integer('customer_id');
             $table->integer('product_id');
             $table->integer('amount');
-            $table->double('price');
-            $table->string('status');
+            $table->float('price');
+            $table->integer('status');
             $table->timestamps();
         });
     }
