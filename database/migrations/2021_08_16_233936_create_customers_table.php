@@ -18,8 +18,7 @@ class CreateCustomersTable extends Migration
             $table->string('name');
             $table->string('last_name');
             $table->string('email')->unique();
-            $table->integer('contact_id');
-            $table->integer('address_id');
+            $table->string('password');
             $table->boolean('active');
             $table->timestamps();
         });

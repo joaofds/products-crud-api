@@ -7,8 +7,7 @@ $factory->define(App\Models\Customer::class, function (Faker $faker) {
         'name' => $faker->name,
         'last_name' => $faker->lastName,
         'email' => $faker->email,
-        'contact_id' => $faker->numberBetween(1, 150),
-        'address_id' => $faker->numberBetween(1, 150),
+        'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
         'active' => $faker->boolean,
     ];
 });
