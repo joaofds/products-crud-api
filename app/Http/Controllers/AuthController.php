@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -21,7 +20,7 @@ class AuthController extends Controller
                     'status' => 200,
                     'message' => 'User logged in success. :)',
                     'token' => $token
-                ] 
+                ]
             );
         }
 
@@ -30,7 +29,8 @@ class AuthController extends Controller
                 'status' => 403,
                 'message' => 'Invalid email or password. :(',
                 'token' => $token
-            ], 403
+            ],
+            403
         );
     }
 
@@ -44,8 +44,13 @@ class AuthController extends Controller
         return 'success';
     }
 
+    /**
+     * Rota de verificação de usuario autenticado.
+     *
+     * @return Response Json
+     */
     public function me()
     {
-        return 'success';
+        return response()->json(auth()->user());
     }
 }
