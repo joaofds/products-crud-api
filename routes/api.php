@@ -13,6 +13,11 @@ Route::any('/', function() {
     );
 });
 
+Route::post('login', 'AuthController@login');
+Route::post('logout', 'AuthController@logout');
+Route::post('refresh', 'AuthController@refresh');
+Route::post('me', 'AuthController@me');
+
 // Product Routes
 Route::apiResource('/product', 'ProductController')->except('create', 'edit');
 
