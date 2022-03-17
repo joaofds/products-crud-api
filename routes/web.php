@@ -11,6 +11,10 @@
 |
 */
 
-Route::get('/', function() {
-    return redirect('/api');
+Route::get('/', function () {
+    return redirect('/api/v1');
+});
+
+Route::get('/api', function () {
+    return redirect('/api/v1');
 });
