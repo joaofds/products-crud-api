@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class AuthController extends Controller
 {
     /**
-     * Atentica usuário e retorna um token caso sucesso no login.
+     * Autentica usuário e retorna um token caso sucesso no login.
      *
      * @return string
      */
@@ -35,9 +35,21 @@ class AuthController extends Controller
         );
     }
 
+    /**
+     * Logout na API
+     *
+     * @return void
+     */
     public function logout()
     {
-        return 'success';
+        auth('api')->logout();
+
+        return Response()->json(
+            [
+                'status' => 200,
+                'message' => 'Logout success! Good bye... :)'
+            ]
+        );
     }
 
     /**
@@ -65,6 +77,12 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json(auth()->user());
+        return response()->json(
+            [
+                'status' => 200,
+                'message' => 'Refresh token success. :)',
+                'user_data' => auth()->user()
+            ]
+        );
     }
 }
