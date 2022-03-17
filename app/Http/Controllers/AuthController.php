@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use Illuminate\Auth\Access\Response;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -39,9 +40,22 @@ class AuthController extends Controller
         return 'success';
     }
 
+    /**
+     * Renova o token do usuario autenticado.
+     *
+     * @return Response Json
+     */
     public function refresh()
     {
-        return 'success';
+        $token = auth('api')->refresh();
+
+        return Response()->json(
+            [
+                'status' => 200,
+                'message' => 'Refresh token success. :)',
+                'token' => $token
+            ]
+        );
     }
 
     /**

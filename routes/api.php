@@ -15,7 +15,6 @@ Route::any('/v1', function () {
 
 Route::post('/v1/login', 'AuthController@login');
 Route::post('logout', 'AuthController@logout');
-Route::post('refresh', 'AuthController@refresh');
 
 // Product Routes
 Route::apiResource('/product', 'ProductController')->except('create', 'edit');
@@ -24,6 +23,7 @@ Route::apiResource('/product', 'ProductController')->except('create', 'edit');
 Route::middleware('jwt.auth')->prefix('/v1')->group(function () {
     // jwt-auth routes
     Route::post('me', 'AuthController@me');
+    Route::post('refresh', 'AuthController@refresh');
 
     // Customer
     Route::prefix('/customer')->group(function () {
