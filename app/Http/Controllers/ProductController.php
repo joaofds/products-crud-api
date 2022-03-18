@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -7,6 +6,12 @@ use App\Models\Product;
 
 class ProductController extends Controller
 {
+    // DI de Product.
+    public function __construct(Product $product)
+    {
+        $this->product = $product;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,24 +19,21 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product = new Product();
-        if (count($product->all()) > 0) {
+        $product = $this->product->all();
+        if (count($product) > 0) {
             return response()->json(
                 [
                     'produtos' => $product->all()
                 ]
             );
-        } else {
-          return response()->json(
-              [
-                  'code' => 204,
-                  'status' => 'No products registered'
-              ]
-          );
         }
 
-        // do the same
-        //return Product::all();
+        return response()->json(
+            [
+                'code' => 204,
+                'status' => 'No products registered'
+            ]
+        );
     }
 
     /**
@@ -42,28 +44,36 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $product = new Product();
-        $product->name = $request->name;
-        $product->price = $request->price;
-        $product->save();
-        if ($product) {
+        $data = $request->all(['name', 'price']);
+
+        $rules = [
+            'name' => 'required|unique:products',
+            'price' => 'required'
+        ];
+
+        $feedback = [
+            'required' => 'O campo :attribute é obrigatório',
+            'name.unique' => 'Já existe um produto com esse título'
+        ];
+
+        $request->validate($rules, $feedback);
+        $product = $this->product;
+        $result = $product->create($data);
+        if ($result) {
             return response()->json(
                 [
                     'code' => 201,
                     'status' => 'Product created',
                 ]
             );
-        } else {
-            return response()->json(
-                [
-                    'code' => 500,
-                    'status' => 'Internal error'
-                ]
-            );
         }
 
-        // do the same
-        //Product::create($request->all());
+        return response()->json(
+            [
+                'code' => 500,
+                'status' => 'Internal error'
+            ]
+        );
     }
 
     /**
@@ -74,7 +84,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = new Product();
+        $product = $this->product;
         if ($product->find($id)) {
             return response()->json(
                 [
@@ -83,15 +93,12 @@ class ProductController extends Controller
                     'produto' => $product->find($id),
                 ]
             );
-        } else {
-            return response()->json([
-                'code' => 204,
-                'status' => 'Product not found'
-            ]);
         }
 
-        // do the same
-        //return Product::findOrFail($id);
+        return response()->json([
+            'code' => 204,
+            'status' => 'Product not found'
+        ]);
     }
 
     /**
@@ -103,21 +110,8 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $product = Product::where('id', $id)
-            ->update(
-                [
-                    'name' => $request->name,
-                    'price' => $request->price,
-                ]
-            );
-        if ($product) {
-            return response()->json(
-                [
-                    'code' => 200,
-                    'status' => 'Product updated'
-                ]
-            );
-        } else {
+        $product = $this->product->find($id);
+        if (!$product) {
             return response()->json(
                 [
                     'code' => 204,
@@ -126,9 +120,23 @@ class ProductController extends Controller
             );
         }
 
-        // do the same
-        //$product = Product::find($id);
-        //$product->update($request->all());
+        $rules = [
+            'name' => 'required',
+            'price' => 'required'
+        ];
+
+        $feedback = [
+            'required' => 'O campo :attribute é obrigatório',
+        ];
+
+        $request->validate($rules, $feedback);
+        $product->update($request->all());
+        return response()->json(
+            [
+                'code' => 200,
+                'status' => 'Product updated'
+            ]
+        );
     }
 
     /**
@@ -139,15 +147,8 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::where('id', $id)->delete();
-        if ($product) {
-            return response()->json(
-                [
-                    'code' => 200,
-                    'status' => 'Product deleted'
-                ]
-            );
-        } else {
+        $product = $this->product->find($id);
+        if (!$product) {
             return response()->json(
                 [
                     'code' => 204,
@@ -156,7 +157,12 @@ class ProductController extends Controller
             );
         }
 
-        // do the same
-        //Product::find($id)->delete();
+        $product->delete();
+        return response()->json(
+            [
+                'code' => 200,
+                'status' => 'Product deleted'
+            ]
+        );
     }
 }
